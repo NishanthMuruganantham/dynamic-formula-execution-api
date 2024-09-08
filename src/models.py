@@ -1,19 +1,41 @@
-from __future__ import annotations
-from pydantic import BaseModel, Field
-from typing import List, Optional, Dict, Any
+from pydantic import BaseModel
+from typing import List, Optional
 
 
-class InputField(BaseModel):
-    var_name: str = Field(..., alias="varName")
-    var_type: str = Field(..., alias="varType")
+class Data(BaseModel):
+    id: int
+    fieldA: Optional[float] = None
+    fieldB: Optional[float] = None
+    product: Optional[str] = None
+    unitPrice: Optional[str] = None
+    quantity: Optional[int] = None
+    discount: Optional[str] = None
+
+
+class Inputs(BaseModel):
+    varName: str
+    varType: str
 
 
 class Formula(BaseModel):
     expression: str
-    inputs: List[InputField]
-    output_var: Optional[str] = Field(None, alias="outputVar")
+    inputs: List[Inputs]
+    outputVar: Optional[str] = None
 
 
 class RequestBody(BaseModel):
-    data: List[Dict[str, Any]]
+    data: List[Data]
     formulas: List[Formula]
+
+
+class ResultBody(BaseModel):
+    finalResult: Optional[List[float]] = None
+    result: Optional[List[float]] = None
+    revenue: Optional[List[float]] = None
+    sumResult: Optional[List[float]] = None
+
+
+class SuccessResponse(BaseModel):
+    message: str
+    results: ResultBody
+    status: str = "success"
