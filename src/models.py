@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from typing import List, Optional
+import re
+from typing import Any, List, Optional
 
 
 class Data(BaseModel):
@@ -11,6 +12,28 @@ class Data(BaseModel):
     quantity: Optional[int] = None
     discount: Optional[str] = None
 
+    class Config:
+        extra = "allow"
+
+    def model_post_init(self, __context: Any) -> None:
+        self.discount = self.discount and self._parse_percentage(self.discount)
+        self.unitPrice = self.unitPrice and self._parse_currency(self.unitPrice)
+        return super().model_post_init(__context)
+
+    @staticmethod
+    def _parse_currency(value: str) -> float:
+        try:
+            return float(re.sub(r"[^\d.]", "", value))
+        except ValueError:
+            raise ValueError(f"Invalid currency value: {value}")
+
+    @staticmethod
+    def _parse_percentage(value: str) -> float:
+        try:
+            return float(value.strip("%").strip())
+        except ValueError:
+            raise ValueError(f"Invalid discount value: {value}")
+
 
 class Inputs(BaseModel):
     varName: str
@@ -20,7 +43,7 @@ class Inputs(BaseModel):
 class Formula(BaseModel):
     expression: str
     inputs: List[Inputs]
-    outputVar: Optional[str] = None
+    outputVar: str
 
 
 class RequestBody(BaseModel):
@@ -36,6 +59,6 @@ class ResultBody(BaseModel):
 
 
 class SuccessResponse(BaseModel):
-    message: str
     results: ResultBody
+    message: str = "The formulas were executed successfully."
     status: str = "success"

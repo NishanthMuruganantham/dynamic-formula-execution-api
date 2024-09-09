@@ -19,7 +19,6 @@ async def execute_formula(request_body: RequestBody):
         execution_result = formula_executor.perform_formula_execution()
         response = SuccessResponse(
             results=execution_result,
-            message="Formula execution successful",
         )
         return response.model_dump(exclude_none=True)
     except ValueError as e:
