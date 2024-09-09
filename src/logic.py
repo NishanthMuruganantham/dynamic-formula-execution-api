@@ -8,20 +8,6 @@ class FormulaExecutor:
         self.data_list = data_list
         self.formula_list = formula_list
 
-    @staticmethod
-    def _safe_eval(expression: str, variables: Dict[str, Any]) -> Any:
-        try:
-            return eval(expression, {}, variables)
-        except Exception as e:
-            raise ValueError(f"Invalid expression: {expression}. Error: {str(e)}")
-
-    def _execute_formula_for_given_data(
-        self, expression: str, list_of_incoming_inputs: List[Inputs], given_data: Data
-    ) -> Any:
-        input_variables = {input_variable.varName: given_data.model_dump()[input_variable.varName] for input_variable in list_of_incoming_inputs}
-        expression_output = self._safe_eval(expression, input_variables)
-        return expression_output
-
     def perform_formula_execution(self) -> List[ResultBody]:
         result_body: ResultBody = ResultBody()
         for formula_considered in self.formula_list:
@@ -36,3 +22,16 @@ class FormulaExecutor:
             setattr(result_body, output_variable, output_list)
         return result_body
 
+    def _execute_formula_for_given_data(
+        self, expression: str, list_of_incoming_inputs: List[Inputs], given_data: Data
+    ) -> Any:
+        input_variables = {input_variable.varName: given_data.model_dump()[input_variable.varName] for input_variable in list_of_incoming_inputs}
+        expression_output = self._safe_eval(expression, input_variables)
+        return expression_output
+
+    @staticmethod
+    def _safe_eval(expression: str, variables: Dict[str, Any]) -> Any:
+        try:
+            return eval(expression, {}, variables)
+        except Exception as e:
+            raise ValueError(f"Invalid expression: {expression}. Error: {str(e)}")
