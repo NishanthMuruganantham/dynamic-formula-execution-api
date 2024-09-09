@@ -12,6 +12,9 @@ class Data(BaseModel):
     quantity: Optional[int] = None
     discount: Optional[str] = None
 
+    class Config:
+        extra = "allow"
+
     def model_post_init(self, __context: Any) -> None:
         self.discount = self.discount and self._parse_percentage(self.discount)
         self.unitPrice = self.unitPrice and self._parse_currency(self.unitPrice)
