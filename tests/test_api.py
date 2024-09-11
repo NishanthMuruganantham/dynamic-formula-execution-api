@@ -105,3 +105,75 @@ def test_execute_revenye_formula_success(data, formulas, expected_output):
     assert response.json()["results"]["revenue"] == expected_output["results"]["revenue"]
     assert response.json()["status"] == expected_output["status"]
     assert response.json()["message"] == expected_output["message"]
+
+@pytest.mark.parametrize(
+    "data, formulas, expected_output",
+    [
+        (
+            [
+                {
+                    "id": 1,
+                    "fieldA": 10,
+                    "fieldB": 2
+                },
+                {
+                    "id": 2,
+                    "fieldA": 20,
+                    "fieldB": 3
+                }
+            ],
+            [
+                {
+                    "outputVar": "sumResult",
+                    "expression": "fieldA + fieldB",
+                    "inputs": [
+                        {
+                            "varName": "fieldA",
+                            "varType": "number"
+                        },
+                        {
+                            "varName": "fieldB",
+                            "varType": "number"
+                        }
+                    ]
+                },
+                {
+                    "outputVar": "finalResult",
+                    "expression": "sumResult * 2 + fieldA",
+                    "inputs": [
+                        {
+                            "varName": "sumResult",
+                            "varType": "number"
+                        },
+                        {
+                            "varName": "fieldA",
+                            "varType": "number"
+                        }
+                    ]
+                }
+            ],
+            {
+                "results": {
+                    "sumResult": [12, 23],
+                    "finalResult": [34, 66]
+                },
+                "status": "success",
+                "message": "The formulas were executed successfully."
+            }
+        )
+    ]
+)
+def test_execute_chained_formula_success(data, formulas, expected_output):
+    request_body = {
+        "data": data,
+        "formulas": formulas
+    }
+
+    response = client.post("/api/execute-formula", json=request_body)
+
+    assert response.status_code == 200
+    response_json = response.json()
+    assert response_json["results"]["sumResult"] == expected_output["results"]["sumResult"]
+    assert response_json["results"]["finalResult"] == expected_output["results"]["finalResult"]
+    assert response_json["status"] == expected_output["status"]
+    assert response_json["message"] == expected_output["message"]
