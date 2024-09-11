@@ -52,10 +52,10 @@ class RequestBody(BaseModel):
 
 
 class ResultBody(BaseModel):
-    finalResult: Optional[List[float]] = None
-    result: Optional[List[float]] = None
-    revenue: Optional[List[float]] = None
-    sumResult: Optional[List[float]] = None
+    finalResult: Optional[List[int]] = None
+    result: Optional[List[int]] = None
+    revenue: Optional[List[int]] = None
+    sumResult: Optional[List[int]] = None
 
 
 class SuccessResponse(BaseModel):
