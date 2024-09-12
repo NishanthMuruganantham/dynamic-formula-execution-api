@@ -18,5 +18,5 @@ async def value_error_handler(request: Request, exc: ValueError):
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     return JSONResponse(
         status_code=400,
-        content={"detail": [str(error) for error in exc.errors()]},
+        content={"detail": str(exc)},
     )
