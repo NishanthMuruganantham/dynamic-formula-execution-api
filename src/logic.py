@@ -41,7 +41,10 @@ class FormulaExecutor:
     def _execute_formula_for_given_data(
         self, expression: str, list_of_incoming_inputs: List[Inputs], given_data: Data
     ) -> Any:
-        input_variables = {input_variable.varName: given_data.model_dump()[input_variable.varName] for input_variable in list_of_incoming_inputs}
+        try:
+            input_variables = {input_variable.varName: given_data.model_dump()[input_variable.varName] for input_variable in list_of_incoming_inputs}
+        except KeyError as e:
+            raise ValueError(f"Invalid input variable: {str(e)}")
         expression_output = self._safe_eval(expression, input_variables)
         return expression_output
 
@@ -68,6 +71,9 @@ class FormulaExecutor:
                 in_count[dependent] -= 1
                 if in_count[dependent] == 0:
                     queue.append(dependent)
+
+        if len(sorted_formulas) != len(self.formula_list):
+            raise ValueError("The formula chain is broken!")
 
         return sorted_formulas
 
