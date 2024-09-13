@@ -1,6 +1,6 @@
-from pydantic import BaseModel
 import re
 from typing import Any, List, Optional
+from pydantic import BaseModel
 
 
 class Data(BaseModel):
@@ -12,27 +12,29 @@ class Data(BaseModel):
     quantity: Optional[int] = None
     discount: Optional[str] = None
 
-    class Config:
+    class Config:   # pylint: disable=too-few-public-methods
         extra = "allow"
 
     def model_post_init(self, __context: Any) -> None:
-        self.discount = self.discount and self._parse_percentage(self.discount)
-        self.unitPrice = self.unitPrice and self._parse_currency(self.unitPrice)
+        if self.discount:
+            setattr(self, 'discount', self._parse_percentage(self.discount))
+        if self.unitPrice:
+            setattr(self, 'unitPrice', self._parse_currency(self.unitPrice))
         return super().model_post_init(__context)
 
     @staticmethod
     def _parse_currency(value: str) -> float:
         try:
             return float(re.sub(r"[^\d.]", "", value))
-        except ValueError:
-            raise ValueError(f"Invalid currency value: {value}")
+        except ValueError as e:
+            raise ValueError(f"Invalid currency value: {value}") from e
 
     @staticmethod
     def _parse_percentage(value: str) -> float:
         try:
             return float(value.strip("%").strip())
-        except ValueError:
-            raise ValueError(f"Invalid discount value: {value}")
+        except ValueError as e:
+            raise ValueError(f"Invalid discount value: {value}") from e
 
 
 class Inputs(BaseModel):
