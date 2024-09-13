@@ -1,7 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from src.models import RequestBody, SuccessResponse
 from src.logic import FormulaExecutor
-
+from src.models import RequestBody, SuccessResponse
 
 router = APIRouter()
 
@@ -22,6 +21,6 @@ async def execute_formula(request_body: RequestBody):
         )
         return response.model_dump(exclude_none=True)
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e)) from e
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
