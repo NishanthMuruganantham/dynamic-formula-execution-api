@@ -39,10 +39,13 @@ FastAPI was selected for the following reasons:
 │   ├── models.py           # Contains the pydantic models needed such as Data, Formula, Inputs, and ResultBody models
 │   └── routes.py           # Contains the route function for the given endpoint /api/execute-formula
 ├── tests
-│   └── test_executor.py       # Unit tests for formula execution logic
-├── README.md                  # This file
-├── requirements.txt           # Dependencies for the project
-└── pyproject.toml             # Project metadata and configuration settings
+│   └── ErrorTests.py       # Pytests for validating Exception cases
+│   └── SuccessTests.py     # Pytests for validating expected success scenarios
+├── .gitignore              # specifies files and directories Git should ignore
+├── main.py                 # runs the FastAPI app with live reloading using Uvicorn server
+└── pyproject.toml          # Project metadata and configuration settings
+├── README.md               # This file
+├── requirements.txt        # Dependencies for the project
 ```
 
 ## Setup Instructions
@@ -92,7 +95,7 @@ Before setting up the project, ensure that the following dependencies are instal
 
 The API exposes endpoints to execute formulas dynamically using FastAPI. The main endpoint accepts the dataset and the list of formulas to be executed.
 
-#### Endpoint: `/execute-formulas`
+#### Endpoint: `/api/execute-formula`
 - **Method**: `POST`
 - **Description**: Executes the provided formulas on the given data and returns the results.
 
@@ -301,3 +304,7 @@ The `FormulaExecutor` class is responsible for processing a list of formulas on 
 - **Formula**: Defines each formula's expression and input-output variables.
 - **Inputs**: Represents input variables for formulas.
 - **ResultBody**: Holds the results of formula executions.
+
+## Hackathon
+
+Link - https://hackathon-app.doselect.com/1464/problem/1poryb
