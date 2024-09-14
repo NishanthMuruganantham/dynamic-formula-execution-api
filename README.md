@@ -83,6 +83,13 @@ Before setting up the project, ensure that the following dependencies are instal
     ```bash
     pytest
     ```
+4. **Run the Server**:
+
+    Running the server locally:
+
+    ```bash
+    python main.py
+    ```
 
 ### API Endpoints 🌐
 
