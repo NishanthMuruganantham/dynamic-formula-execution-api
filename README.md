@@ -1,27 +1,19 @@
 
-# Dynamic Formula Execution API
+# Dynamic Formula Execution API 🚀
 
 ## Overview
 
 The **Dynamic Formula Execution API** is a Python-based API that interprets and executes complex mathematical formulas on structured datasets. It supports formula chaining, validation, and real-time calculation of values across various data types, such as numbers, strings, booleans, dates, and currencies. The solution ensures efficient performance with sub-second response times, making it suitable for large datasets and complex workflows.
 
-This API was developed as part of a coding challenge to demonstrate key skills in Python, FastAPI, and mathematical expression evaluation.
+This API was developed as part of a coding challenge to demonstrate key skills in Python and API development.
 
-## Why FastAPI?
+## Why FastAPI? 🏎️
 
 FastAPI was selected for the following reasons:
 - **Performance**: FastAPI is one of the fastest Python web frameworks, built on top of ASGI and supports async programming, which helps to efficiently handle I/O-bound operations.
 - **Ease of Use**: FastAPI has automatic request validation, serialization, and generation of OpenAPI documentation, which helps to reduce boilerplate code and improve development speed.
 
-## Features
-
-- **Dynamic Expression Evaluation**: Supports dynamic evaluation of mathematical expressions based on input variables.
-- **Formula Chaining**: Formulas can depend on the output of other formulas, allowing for complex workflows.
-- **Topological Sorting**: Ensures that formulas are executed in the correct order based on their dependencies.
-- **Error Handling**: Provides robust error handling for invalid expressions and missing input variables.
-- **Extensible Framework**: Easily extendable to support additional data types or more complex formula logic.
-
-## Requirements
+## Requirements 📦
 
 - **Python 3.8+**
 - **Pydantic**: For data validation.
@@ -29,7 +21,7 @@ FastAPI was selected for the following reasons:
 - **Uvicorn**: For serving the application.
 - **re**: For regex operations in currency/percentage parsing.
 
-## Project Structure
+## Project Structure 🗂️
 
 ```bash
 .
@@ -46,9 +38,10 @@ FastAPI was selected for the following reasons:
 └── pyproject.toml          # Project metadata and configuration settings
 ├── README.md               # This file
 ├── requirements.txt        # Dependencies for the project
+├── vercel.json             # Contains the vercel deployment configuration
 ```
 
-## Setup Instructions
+## Setup Instructions 🛠️
 
 ### Prerequisites
 
@@ -91,7 +84,7 @@ Before setting up the project, ensure that the following dependencies are instal
     pytest
     ```
 
-### API Endpoints
+### API Endpoints 🌐
 
 The API exposes endpoints to execute formulas dynamically using FastAPI. The main endpoint accepts the dataset and the list of formulas to be executed.
 
@@ -99,7 +92,7 @@ The API exposes endpoints to execute formulas dynamically using FastAPI. The mai
 - **Method**: `POST`
 - **Description**: Executes the provided formulas on the given data and returns the results.
 
-## Usage
+## Usage 📈
 
 To use the API, you can run the FastAPI server locally:
 
@@ -287,6 +280,22 @@ This will start the API, and you can use tools like **Postman** or **cURL** to s
 }
 ```
 
+## Public Deployment
+
+The **Dynamic Formula Execution API** has been **publicly deployed** and can be accessed via **Vercel**.
+
+**Live API URL**: [https://dynamic-formula-execution-api.vercel.app](https://dynamic-formula-execution-api.vercel.app)
+
+This live deployment allows users to directly interact with the API for formula execution. Access it from Postman to perform POST calls.
+
+## Features  🌟
+
+- **Dynamic Expression Evaluation**: Supports dynamic evaluation of mathematical expressions based on input variables.
+- **Formula Chaining**: Formulas can depend on the output of other formulas, allowing for complex workflows.
+- **Topological Sorting**: Ensures that formulas are executed in the correct order based on their dependencies.
+- **Error Handling**: Provides robust error handling for invalid expressions and missing input variables.
+- **Extensible Framework**: Easily extendable to support additional data types or more complex formula logic.
+
 ## Key Components
 
 ### FormulaExecutor Class
@@ -305,6 +314,9 @@ The `FormulaExecutor` class is responsible for processing a list of formulas on 
 - **Inputs**: Represents input variables for formulas.
 - **ResultBody**: Holds the results of formula executions.
 
-## Hackathon
+## Links
 
-Link - https://hackathon-app.doselect.com/1464/problem/1poryb
+1) Hackathon Link - https://hackathon-app.doselect.com/1464/problem/1poryb
+2) Vercel Hosted API domain - https://dynamic-formula-execution-api.vercel.app
+3) Swagger UI - An interactive documentation interface provided by FastAPI - https://dynamic-formula-execution-api.vercel.app/docs
+4) ReDoc -  Another option for API documentation, offering a different interface. - https://dynamic-formula-execution-api.vercel.app/redoc
